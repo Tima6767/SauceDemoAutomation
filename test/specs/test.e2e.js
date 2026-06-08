@@ -1,19 +1,16 @@
-import { browser, $, expect } from '@wdio/globals';
-
+import LoginPage from '../pageobjects/login.page.js';
+import InventoryPage from '../pageobjects/inventory.page.js';
+import CartPage from '../pageobjects/cart.page.js';
 describe('Cart Tests', () => {
-
-    it('Checkout without products', async () => {
-
-       await browser.url('https://www.saucedemo.com/');
-        await $('#user-name').setValue('standard_user');
-        await $('#password').setValue('secret_sauce');
-        await $('#login-button').click();
-        const title = await $('.title');
-        await expect(title).toHaveText('Products');
-        await $('.shopping_cart_link').click();
-        await expect(title).toHaveText('Your Cart');
-        await $('#checkout').click();
-        await expect($('.error-message')).toHaveText('Cart is empty');
+    it('checkout without products', async () => {
+      await LoginPage.open();
+      await LoginPage.loginAsStandardUser();
+     await expect(InventoryPage.title)
+     .toHaveText('Products');
+     await InventoryPage.openCart();
+     await CartPage.clickCheckout();
+     await expect(CartPage.emptyCartError)
+     .toHaveText('Cart is empty');
     });
 
 });
