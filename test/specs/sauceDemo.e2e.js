@@ -136,16 +136,11 @@ beforeEach(async () => {
             .toHaveText('Products');
         await InventoryPage.sortByNameZToA();
 
-        const nameElements = await browser.$$('.inventory_item_name');
+const names = await InventoryPage.getProductNames();
 
-        const names = [];
-        for (const name of nameElements) {
-            names.push(await name.getText());
-        }
+const sortedNames = [...names].sort().reverse();
 
-        const sortedNames = [...names].sort().reverse();
-
-        expect(names).toEqual(sortedNames);
+expect(names).toEqual(sortedNames);
      });    
 
 
