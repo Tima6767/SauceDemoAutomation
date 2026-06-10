@@ -209,4 +209,76 @@ await expect(InventoryPage.cartBadge)
     .not.toBeExisting();
 
 });
+it('login with invalid password', async () => {
+
+    await LoginPage.open();
+
+    await LoginPage.login('standard_user', 'wrong_password');
+
+    await expect(LoginPage.errorMessage)
+        .toHaveText('Epic sadface: Username and password do not match any user in this service');
+
+});
+
+    it('login with locked out test login', async () => {
+
+        await LoginPage.open();
+
+        await LoginPage.login('locked_out_user', 'secret_sauce');
+
+        await expect(LoginPage.errorMessage)
+            .toHaveText('Epic sadface: Sorry, this user has been locked out.');
+
+    });
+     it('Logout', async () => {
+
+        await LoginPage.open();
+
+        await LoginPage.loginAsStandardUser();
+
+        await expect(InventoryPage.title)
+            .toHaveText('Products');
+
+        await InventoryPage.openMenu();
+
+        await expect(InventoryPage.logoutButton)
+    .toBeDisplayed();
+
+        await InventoryPage.logout();
+
+        await expect(LoginPage.loginButton)
+            .toBeDisplayed();
+
+            await expect(LoginPage.usernameInput)
+    .toHaveValue('');
+
+await expect(LoginPage.passwordInput)
+    .toHaveValue('');
+
+     });
+    it('Footer links', async () => {
+
+    await LoginPage.open();
+
+    await LoginPage.loginAsStandardUser();
+
+    await expect(InventoryPage.title)
+        .toHaveText('Products');
+
+
+    await InventoryPage.openTwitter();
+
+    let handles = await browser.getWindowHandles();
+
+    await browser.switchToWindow(handles[1]);
+
+    await expect(browser)
+        .toHaveUrl(expect.stringContaining('saucelabs'));
+
+    await browser.closeWindow();
+
+    await browser.switchToWindow(handles[0]);
+
+});
+
 });

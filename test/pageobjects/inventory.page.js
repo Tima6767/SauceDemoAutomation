@@ -7,12 +7,40 @@ class InventoryPage {
         return $('.shopping_cart_link');
     }
 
-   get backpackAddButton() {
+     get backpackAddButton() {
     return $('[data-test="add-to-cart-sauce-labs-backpack"]');
 }
 
-get backpackRemoveButton() {
+     get backpackRemoveButton() {
     return $('[data-test="remove-sauce-labs-backpack"]');
+    }
+    get twitterLink() {
+        return $('#page_wrapper > footer > ul > li.social_twitter > a');
+    }
+
+
+    get facebookLink() {
+        return $('#page_wrapper > footer > ul > li.social_facebook > a');
+    }
+
+
+    get linkedinLink() {
+        return $('#page_wrapper > footer > ul > li.social_linkedin > a');
+    }
+
+
+async openTwitter() {
+    await this.twitterLink.click();
+}
+
+
+async openFacebook() {
+    await this.facebookLink.click();
+}
+
+
+async openLinkedin() {
+    await this.linkedinLink.click();
 }
 
 
