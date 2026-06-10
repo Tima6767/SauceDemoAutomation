@@ -77,27 +77,17 @@ beforeEach(async () => {
     await expect(InventoryPage.title)
         .toHaveText('Products');
 
-
     await InventoryPage.sortByPriceLowHigh();
 
-    const priceElements = await browser.$$('.inventory_item_price');
+    const prices = await InventoryPage.getPrices();
 
-   const prices = [];
-
-for (const price of priceElements) {
-    prices.push(await price.getText());
-}
-
-    const priceNumbers = prices.map(
-        price => Number(price.replace('$',''))
-    );
-
-    const sortedPrices = [...priceNumbers].sort(
+    const sortedPrices = [...prices].sort(
         (a,b)=>a-b
     );
 
-    expect(priceNumbers).toEqual(sortedPrices);
-})
+    expect(prices).toEqual(sortedPrices);
+
+    });
 
      it('Sorting products by price high to low', async () => {
         
@@ -110,23 +100,13 @@ for (const price of priceElements) {
 
         await InventoryPage.sortByPriceHighLow();
 
-        const priceElements = await browser.$$('.inventory_item_price');
+        const prices = await InventoryPage.getPrices();
 
-        const prices = [];
-
-        for (const price of priceElements) {
-            prices.push(await price.getText());
-        }
-
-        const priceNumbers = prices.map(
-            price => Number(price.replace('$',''))
-        );
-
-        const sortedPrices = [...priceNumbers].sort(
+        const sortedPrices = [...prices].sort(
             (a,b)=>b-a
         );
 
-        expect(priceNumbers).toEqual(sortedPrices);
+        expect(prices).toEqual(sortedPrices);
     });
 
      it('Sorting products by name A-Z', async () => {
@@ -140,15 +120,11 @@ for (const price of priceElements) {
 
       await InventoryPage.sortByNameAToZ();
       
-      const nameElements = await browser.$$('.inventory_item_name');
-        const names = [];
-        for (const name of nameElements) {
-            names.push(await name.getText());
-        }
+      const names = await InventoryPage.getProductNames();
 
-        const sortedNames = [...names].sort();
+      const sortedNames = [...names].sort();
 
-        expect(names).toEqual(sortedNames);
+      expect(names).toEqual(sortedNames);
      });
      
      it('Sorting products by name Z-A', async () => {

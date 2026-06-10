@@ -119,7 +119,36 @@ async addProduct() {
 
     await this.backpackAddButton.click();
 }
-
+get productPrices() {
+    return $$('.inventory_item_price');
 }
 
+get productNames() {
+    return $$('.inventory_item_name');
+}
+
+
+async getPrices() {
+    const prices = [];
+
+    for (const price of await this.productPrices) {
+        prices.push(await price.getText());
+    }
+
+    return prices.map(price =>
+        Number(price.replace('$', ''))
+    );
+}
+
+
+async getProductNames() {
+    const names = [];
+
+    for (const name of await this.productNames) {
+        names.push(await name.getText());
+    }
+
+    return names;
+}
+}
 export default new InventoryPage();
