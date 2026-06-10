@@ -14,6 +14,13 @@ class CartPage {
     get productName() {
         return $('.inventory_item_name');
     }
-}
 
+    get backToHomeButton() {
+        return $('#back-to-products');
+    }
+
+
+
+
+}
 export default new CartPage();
